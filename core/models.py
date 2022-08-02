@@ -38,12 +38,18 @@ class Wallet(models.Model):
 
     def __str__(self) -> str:
         return f'{self.owner.cpf}-{self.owner.first_name()}'
+    
+    def can_withdraw(self, value):
+        if self.balance >= value:
+            return True
+        
+        return False
 
 class Ordinary(Profile):
     wallet = models.OneToOneField(to=Wallet, null=True, on_delete=models.SET_NULL)
-    pass
+    
 
 class Shopkeeper(Profile):
     wallet = models.OneToOneField(to=Wallet, null=True, on_delete=models.SET_NULL)
-    pass
+    
 
