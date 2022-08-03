@@ -1,6 +1,7 @@
 from rest_framework import serializers
-
 from core.models import Ordinary, Shopkeeper
+
+
 
 class InputOrdinaryProfileSerializer(serializers.Serializer):
     full_name = serializers.CharField(max_length=25)

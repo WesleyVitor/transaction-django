@@ -1,11 +1,18 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+
+from core.managers import CanCreate
+
 from core.selectors import ShopKeeperProfileSelector
 from core.serializers import OutputShopKeeperProfileSerializer,InputShopkeeperProfileSerializer, InputCustomUserSerializer
 from core.services.shopkeeper_profile import ShopkeeperProfileService
 class ShopKeeperProfileApiView(APIView):
-
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated|CanCreate]
+    
     def get(self, request):
         shopkeeper_profile_selector =ShopKeeperProfileSelector()
         shopkeepers = shopkeeper_profile_selector.get_all_shopkeeper_profiles()

@@ -2,15 +2,21 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from core.models import Ordinary
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+
+
 from core.serializers import InputOrdinaryProfileSerializer,OutputOrdinaryProfileSerializer,InputCustomUserSerializer
 from core.services.ordinary_profile import OrdinaryProfileService
 from core.selectors import OrdinaryProfileSelector
+from core.managers import CanCreate
 # Create your views here.
 
 
 class OrdinaryProfileApiView(APIView):
-
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated|CanCreate]
+    
     def get(self, request):
         ordinary_profile_selector =OrdinaryProfileSelector()
         ordinaries = ordinary_profile_selector.get_all_ordinary_profiles()
@@ -19,7 +25,8 @@ class OrdinaryProfileApiView(APIView):
         ordinaries_serializer:OutputOrdinaryProfileSerializer = OutputOrdinaryProfileSerializer(ordinaries, many=True)
         
         return Response(data=ordinaries_serializer.data, status=status.HTTP_200_OK)
-    
+
+
     def post(self, request):
         
         ordinary_serializer:InputOrdinaryProfileSerializer = InputOrdinaryProfileSerializer(data={
