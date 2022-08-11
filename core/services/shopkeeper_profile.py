@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.contrib.auth.models import Group
 from core.models import CustomUser, Ordinary, Shopkeeper
 from core.serializers import InputShopkeeperProfileSerializer, InputCustomUserSerializer
 from core.selectors import OrdinaryProfileSelector
@@ -16,6 +17,7 @@ class ShopkeeperProfileService:
         shopkeeper:Shopkeeper = Shopkeeper.objects.create(full_name=shopkeeper_serializer['full_name'].value, 
         cpf=shopkeeper_serializer['cpf'].value, user=user)
         shopkeeper.save()
+        self.shopkeeper_to_group(user)
 
     
     def can_create_new_shopkeeper_profiler(self, cpf:str):
@@ -25,4 +27,9 @@ class ShopkeeperProfileService:
         ordinary_profile_selector = OrdinaryProfileSelector()
         exist = ordinary_profile_selector.check_ordinary_profile_exist_by_cpf(cpf)
         return not(exist)
+    
+    def shopkeeper_to_group(self, user):
+        shopkeeper_group_name = "Shopkeeper"
+        group:Group = Group.objects.get(name=shopkeeper_group_name)
+        group.user_set.add(user)
         
