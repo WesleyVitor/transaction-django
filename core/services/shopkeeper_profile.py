@@ -1,6 +1,6 @@
 from django.db import transaction
 from django.contrib.auth.models import Group
-from core.models import CustomUser, Ordinary, Shopkeeper
+from core.models import CustomUser, Shopkeeper, Wallet
 from core.serializers import InputShopkeeperProfileSerializer, InputCustomUserSerializer
 from core.selectors import OrdinaryProfileSelector
 
@@ -18,8 +18,14 @@ class ShopkeeperProfileService:
         cpf=shopkeeper_serializer['cpf'].value, user=user)
         shopkeeper.save()
         self.shopkeeper_to_group(user)
+        self.create_wallet(shopkeeper)
 
-    
+    def create_wallet(self, shopkeeper_profile):
+        """ Create a wallet to profile"""
+        wallet:Wallet = Wallet.objects.create(balance=0.0)
+        wallet.save()
+        shopkeeper_profile.wallet = wallet
+        shopkeeper_profile.save()
     def can_create_new_shopkeeper_profiler(self, cpf:str):
         """
             Can create just if dont have a ordinary profile with some cpf

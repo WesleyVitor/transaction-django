@@ -36,8 +36,7 @@ class Profile(models.Model):
 class Wallet(models.Model):
     balance = models.DecimalField('Balance', decimal_places=2, max_digits=6)
 
-    def __str__(self) -> str:
-        return f'{self.owner.cpf}-{self.owner.first_name()}'
+    
     
     def can_withdraw(self, value):
         if self.balance >= value:

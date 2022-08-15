@@ -3,8 +3,12 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from core.forms import CustomUserChangeForm, CustomUserCreationForm
-from core.models import CustomUser, Ordinary, Shopkeeper
+from core.models import CustomUser, Ordinary, Shopkeeper, Wallet
 
+
+@admin.register(Wallet)
+class WalletAdmin(admin.ModelAdmin):
+    list_display = ('balance','ordinary','shopkeeper',)
 @admin.register(Ordinary)
 class OrdinaryProfile(admin.ModelAdmin):
     list_display = ('full_name', 'user','cpf', 'wallet')
