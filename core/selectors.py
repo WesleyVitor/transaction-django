@@ -15,3 +15,5 @@ class ShopKeeperProfileSelector:
     def get_all_shopkeeper_profiles(self):
         shopkeepers = Shopkeeper.objects.all()
         return shopkeepers
+    def check_shopkeeper_profile_exist_by_cpf(self, cpf:str):
+        return Shopkeeper.objects.filter(cpf=cpf).exists()
