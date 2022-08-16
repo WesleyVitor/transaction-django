@@ -25,3 +25,8 @@ class OutputShopKeeperProfileSerializer(serializers.ModelSerializer):
 class InputShopkeeperProfileSerializer(serializers.Serializer):
     full_name = serializers.CharField(max_length=25)
     cpf =serializers.CharField(max_length=11)
+
+class InputTransfer(serializers.Serializer):
+    value = serializers.DecimalField(max_digits=5,decimal_places=2)
+    payer = serializers.CharField(max_length=11, required=True)
+    payee = serializers.CharField(max_length=11, required=True)
