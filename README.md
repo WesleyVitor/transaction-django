@@ -11,6 +11,6 @@ Aplicação de simulação de transferência bancária entre dois tipos de usuá
 
   Usuário que tem a possibilidade de enviar um determinado valor para outro usuário
   
-- Shoopkeeper Profile
+- Shopkeeper Profile
 
   Usuário que tem a permissão de receber um determinado valor, mas não pode enviar valor
