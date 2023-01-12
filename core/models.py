@@ -17,7 +17,7 @@ class CustomUser(AbstractUser):
 class Profile(models.Model):
     full_name = models.CharField('Full Name', max_length=255)
     cpf = models.CharField('CPF', max_length=11, unique=True)
-    user = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE, null=True)
 
     class Meta:
         abstract = True

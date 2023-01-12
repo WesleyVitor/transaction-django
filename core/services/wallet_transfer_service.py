@@ -15,7 +15,7 @@ class WalletTransferService:
         try:
             payee = Ordinary.objects.get(cpf=inputTransfer['payee'].value)
         except Exception as e:
-            print("Exception dentro:",e)
+            
             payee = Shopkeeper.objects.get(cpf=inputTransfer['payee'].value)
 
 

@@ -2,6 +2,7 @@ from django.contrib.auth.models import Group, Permission
 from django.core.management import BaseCommand
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import models as auth_models
+from core.models import CustomUser
 class Command(BaseCommand):
     help: str = "Create groups and apply permissions"
 
@@ -17,7 +18,7 @@ class Command(BaseCommand):
         can_send_money_codename = "send_money"
         can_receive_money_codename = "receive_money"
         
-        content_type = ContentType.objects.get_for_model(model=auth_models.User)
+        content_type = ContentType.objects.get_for_model(model=CustomUser)
         
         send_money,created = Permission.objects.get_or_create(name=can_send_money_name, 
         codename=can_send_money_codename,
