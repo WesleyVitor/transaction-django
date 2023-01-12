@@ -30,5 +30,8 @@ class OrdinaryProfileTestView(TestCase):
         self.assertEqual(CustomUser.objects.count(), users_count_before+1)
         self.assertEqual(Wallet.objects.count(), wallet_count_before+1)
 
+
+
+
         
 
